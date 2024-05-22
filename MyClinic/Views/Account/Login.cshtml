@@ -1,0 +1,29 @@
+﻿@model ClientModel
+
+@{
+}
+
+<div class="container-fluid ps-2">
+    <div class="row justify-content-md-center">
+        <div class="col-3">
+            <div class="card">
+                <div class="card-body">
+                    @Html.ValidationMessage("ValidationMessage", new { @class = "alert-danger" })
+                    <form method="POST" asp-action="Login" class="pb-3">
+                        <div class="form-floating pb-3">
+                            <input asp-for="Email" class="form-control" placeholder="name@example.com">
+                            <label asp-for="Email">Email</label>
+                        </div>
+                        <div class="form-floating pb-3">
+                            <input asp-for="Password" class="form-control" placeholder="Password">
+                            <label asp-for="Password">Password</label>
+                            <span asp-validation-for="Password" class="text-danger"></span>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100 py-2">Sign in</button>
+                    </form>
+                    <p>Don't have an account? <a asp-area="" class="link-info" asp-controller="Client" asp-action="Create">Register here</a><!--<a href="#!" class="link-info">Register here</a>--></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

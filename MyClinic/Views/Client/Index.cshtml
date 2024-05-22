@@ -1,0 +1,20 @@
+﻿@model IEnumerable<ClientModel>
+
+
+<div class="container-fluid">
+    <div class="row">
+@foreach (var item in Model)
+{
+        <div class="col-3 p-2">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Name: @item.Name</h5>
+                    <p class="card-text"><span style="font-weight: bold;">Email:</span> @item.Email</p>
+                    <a class="btn btn-outline-primary btn-sm" role="button" aria-disabled="true" asp-controller="Client" asp-action="Detail" asp-route-id="@item.ID">View</a>
+                    <a class="btn btn-outline-primary btn-sm" role="button" aria-disabled="true" asp-controller="Client" asp-action="Edit" asp-route-id="@item.ID">Edit</a>
+                </div>
+            </div>
+        </div>
+}
+    </div>
+</div>
