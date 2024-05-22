@@ -14,10 +14,10 @@
             <div class="container-fluid">
                @if ((User != null || User.Identity != null) && User.Identity.IsAuthenticated)
                {
-                    <a class="navbar-brand" asp-area="" asp-controller="Client" asp-action="Index">MyClinic</a>
+                    <a class="navbar-brand" asp-area="" asp-controller="Client" asp-action="Index"><img src="~/media/health-insurance-32.png" />MyClinic</a>
                 } else
                 {
-                    <a class="navbar-brand" asp-area="" asp-controller="Account" asp-action="Login">MyClinic</a>
+                    <a class="navbar-brand" asp-area="" asp-controller="Account" asp-action="Login"><img src="~/media/health-insurance-32.png"/>MyClinic</a>
                 }
 
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
@@ -36,11 +36,12 @@
                         <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             @User?.Identity?.Name
                         </a>
-                        <ul class="dropdown-menu navbar-right" style="right:0 !important; left:auto !important;">
+                        <ul class="dropdown-menu navbar-right pt-0 pb-0" style="right:0 !important; left:auto !important;">
+                            <li><a class="dropdown-item" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight" href="#">Show offcanvas</a></li>
+                                <li>
+                                    <hr class="dropdown-divider mt-0 mb-0">
+                                </li>
                             <li><a class="dropdown-item" asp-area="" asp-controller="Account" asp-action="Logout">Logout</a></li>
-                            <li><a class="dropdown-item" href="#">Another action</a></li>
-                            <li><hr class="dropdown-divider"></li>
-                            <li><a class="dropdown-item" href="#">Something else here</a></li>
                         </ul>
                     </div>
                     }
@@ -53,7 +54,15 @@
             @RenderBody()
         </main>
     </div>
-
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel" style="visibility: hidden;" aria-hidden="true">
+        <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="offcanvasRightLabel">Offcanvas right</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+            ...
+        </div>
+    </div>
     <footer class="border-top footer text-muted">
         <div class="container">
             &copy; 2024 - MyClinic - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
