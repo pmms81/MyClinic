@@ -8,6 +8,7 @@ using System.Security.Claims;
 namespace MyClinic.Controllers
 {
     //[Authorize]
+    // New Comment
     public class ClientController : Controller
     {
         private readonly IClient _client;
