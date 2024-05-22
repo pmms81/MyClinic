@@ -20,3 +20,16 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+.btn.btn-noef {
+    float: right !important;
+    margin-left: 4px !important;
+}
+
+.btn.btn-noef:hover {
+    background-color: transparent !important;
+}
+
+.offcanvas-header.offcanvas-header-customized {
+    background-color:#c3e9f5;
+}

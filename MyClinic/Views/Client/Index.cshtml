@@ -10,9 +10,9 @@
                 <div class="card-body">
                     <h5 class="card-title">Name: @item.Name</h5>
                     <p class="card-text"><span style="font-weight: bold;">Email:</span> @item.Email</p>
-                    <a class="btn btn-outline-primary btn-sm" role="button" aria-disabled="true" asp-controller="Client" asp-action="Detail" asp-route-id="@item.ID">View</a>
-                    <a class="btn btn-outline-primary btn-sm" role="button" aria-disabled="true" asp-controller="Client" asp-action="Edit" asp-route-id="@item.ID"><img src="~/media/edit-24.png" /></a>
-                    <a class="btn btn-outline-primary btn-sm" role="button" aria-disabled="true"><img src="~/media/delete-24.png"/></a>
+                    <a class="btn btn-sm btn-outline-secondary btn-noef" role="button" aria-disabled="true" asp-controller="Client" asp-action="Detail" asp-route-id="@item.ID"><img src="~/media/show-24.png" /></a>
+                    <a class="btn btn-sm btn-outline-secondary btn-noef" role="button" aria-disabled="true"><img src="~/media/delete-24.png" /></a>
+                    <a class="btn btn-sm btn-outline-secondary btn-noef" role="button" aria-disabled="true" asp-controller="Client" asp-action="Edit" asp-route-id="@item.ID"><img src="~/media/edit-24.png" /></a>
                 </div>
             </div>
         </div>
