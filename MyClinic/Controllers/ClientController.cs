@@ -117,5 +117,30 @@ namespace MyClinic.Controllers
             }
             return RedirectToAction("Index");
         }
+
+        [Authorize]
+        [HttpGet]
+        public IActionResult Delete(int id)
+        {
+            try
+            {
+                Task<ClientModel> _c =  _client.GetClientByIDAsync(id);
+                
+                if (_client.Delete(_c.Result))
+                {
+                    //int id = Convert.ToInt32(HttpContext.User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Sid)?.Value);
+                    return RedirectToAction("Login","Account");
+                }
+                else
+                {
+                    ModelState.AddModelError("ValidationMessage","Failed to delete client");
+                    return View("Index");
+                }
+            }
+            catch (Exception ex) {
+                ModelState.AddModelError("ValidationMessage", "Failed to delete client");
+                return View("Index");
+            }
+        }
     }
 }

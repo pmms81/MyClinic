@@ -11,11 +11,16 @@
                     <h5 class="card-title">Name: @item.Name</h5>
                     <p class="card-text"><span style="font-weight: bold;">Email:</span> @item.Email</p>
                     <a class="btn btn-sm btn-outline-secondary btn-noef" role="button" aria-disabled="true" asp-controller="Client" asp-action="Detail" asp-route-id="@item.ID"><img src="~/media/show-24.png" /></a>
-                    <a class="btn btn-sm btn-outline-secondary btn-noef" role="button" aria-disabled="true"><img src="~/media/delete-24.png" /></a>
+                    <a class="btn btn-sm btn-outline-secondary btn-noef" role="button" aria-disabled="true" asp-controller="Client" asp-action="Delete" asp-route-id="@item.ID"><img src="~/media/delete-24.png" /></a>
                     <a class="btn btn-sm btn-outline-secondary btn-noef" role="button" aria-disabled="true" asp-controller="Client" asp-action="Edit" asp-route-id="@item.ID"><img src="~/media/edit-24.png" /></a>
                 </div>
             </div>
         </div>
 }
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            @Html.ValidationMessage("ValidationMessage", new { @class = "alert-danger" })
+        </div>
     </div>
 </div>
