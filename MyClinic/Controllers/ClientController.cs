@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using MyClinic.Interfaces;
@@ -120,16 +121,27 @@ namespace MyClinic.Controllers
 
         [Authorize]
         [HttpGet]
-        public IActionResult Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
             try
             {
-                Task<ClientModel> _c =  _client.GetClientByIDAsync(id);
-                
-                if (_client.Delete(_c.Result))
+                ClientModel _c =  await _client.GetClientByIDAsync(id);
+
+                int claimID = Convert.ToInt32(HttpContext.User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Sid)?.Value);
+
+                if (_client.Delete(_c))
                 {
-                    //int id = Convert.ToInt32(HttpContext.User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Sid)?.Value);
-                    return RedirectToAction("Login","Account");
+                    if (claimID == _c.ID)
+                    {
+                        // delete cookie
+                        await HttpContext.SignOutAsync("MyCookieAuth");
+                        // redirect to Login page
+                        return RedirectToAction("Login", "Account");
+                    }
+                    else
+                    {
+                        return RedirectToAction("Index");
+                    }
                 }
                 else
                 {
