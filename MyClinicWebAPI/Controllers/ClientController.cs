@@ -1,6 +1,13 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MyClinicWebAPI.Interfaces;
 using MyClinicWebAPI.Models;
+using MyClinicWebAPI.Dto;
+using AutoMapper;
+
+/**
+ * AutoMapper used to hide sensitive data from api consumers 
+ * (see "Helper" folder to see mapping assemblies and folder "Dto")
+ **/
 
 namespace MyClinicWebAPI.Controllers
 {
@@ -10,16 +17,19 @@ namespace MyClinicWebAPI.Controllers
     {
 
         private readonly IClient _client;
-        public ClientController(IClient client)
+        private readonly IMapper _mapper;
+
+        public ClientController(IClient client, IMapper mapper)
         {
             _client = client;
+            _mapper = mapper;
         }
 
         [HttpGet]
         [ProducesResponseType(200, Type = typeof(IEnumerable<ClientModel>))]
         public async Task<IActionResult> GetAllClients()
         {
-            IEnumerable<ClientModel> _c = await _client.GetAllClient();
+            IEnumerable<ClientDto> _c = _mapper.Map<IEnumerable<ClientDto>>(await _client.GetAllClient());
 
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
@@ -27,21 +37,12 @@ namespace MyClinicWebAPI.Controllers
             return Ok(_c);
         }
 
-
-        /*
-         * [HttpGet("{id}")]
-         * [ProducesResponseType(200, Type = typeof(ClientModel))]
-         * [ProducesResponseType(400)]
-         * public IActionResult GetClientById(int id) {
-         * 
-         * }
-         */
         [HttpGet("{id}")]
         [ProducesResponseType(200, Type = typeof(ClientModel))]
         [ProducesResponseType(400)]
         public async Task<IActionResult> GetClientByID(int id)
         { 
-           ClientModel c = await _client.GetClientByIDAsync(id);
+           ClientDto c = _mapper.Map<ClientDto>(await _client.GetClientByIDAsync(id));
 
             if (c == null)
                 return NoContent();

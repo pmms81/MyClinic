@@ -24,5 +24,10 @@ namespace MyClinicWebAPI.Repository
         {
             return await _dbContext.Client.Where(c => c.ID == id).FirstOrDefaultAsync();
         }
+
+        public async Task<bool> ClientExists(int id)
+        {
+            return await _dbContext.Client.AnyAsync(c => c.ID == id);
+        }
     }
 }
