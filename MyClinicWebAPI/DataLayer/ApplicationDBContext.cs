@@ -9,6 +9,7 @@ namespace MyClinicWebAPI.DataLayer
 
         }
         public DbSet<ClientModel> Client { get; set; }
+        public DbSet<PrescriptionModel> Prescription { get; set; }
 
     }
 }

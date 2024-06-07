@@ -9,6 +9,8 @@ namespace MyClinicWebAPI.Helper
         public MappingProfiles()
         {
             CreateMap<ClientModel, ClientDto>();
+            CreateMap<PrescriptionModel, PrescriptionDto>();
+            CreateMap<PrescriptionDto, PrescriptionModel>();
         }
     }
 }
