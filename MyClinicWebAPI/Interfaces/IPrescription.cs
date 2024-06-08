@@ -6,8 +6,9 @@ namespace MyClinicWebAPI.Interfaces
     {
         Task<IEnumerable<PrescriptionModel>> GetAllPrescription();
         Task<bool> CreateNewPrescription(PrescriptionModel _prescription);
-        bool UpdatePrescription(PrescriptionModel _prescription);
+        Task<bool> UpdatePrescription(PrescriptionModel _prescription);
         Task<bool> PrescriptionExist(int idPresciption);
-        bool Save();
+        Task<bool> DeletePrescription(PrescriptionModel _prescription);
+        Task<bool> Save();
     }
 }

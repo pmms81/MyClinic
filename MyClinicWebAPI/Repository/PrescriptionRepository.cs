@@ -22,13 +22,13 @@ namespace MyClinicWebAPI.Repository
         public async Task<bool> CreateNewPrescription(PrescriptionModel _prescription)
         {
             await _dbContext.Prescription.AddAsync(_prescription);
-            return Save();
+            return await Save();
         }
 
-        public bool UpdatePrescription(PrescriptionModel _prescription)
+        public async Task<bool> UpdatePrescription(PrescriptionModel _prescription)
         {
             _dbContext.Prescription.Update(_prescription);
-            return Save();
+            return await Save();
         }
 
         public async Task<bool> PrescriptionExist(int idPrescription)
@@ -36,9 +36,15 @@ namespace MyClinicWebAPI.Repository
             return await _dbContext.Prescription.AnyAsync(p => p.IDPrescription == idPrescription);
         }
 
-        public bool Save()
+        public async Task<bool> DeletePrescription(PrescriptionModel _prescription)
         {
-            return _dbContext.SaveChanges() > 0 ? true : false;
+            _dbContext.Prescription.Remove(_prescription);
+            return await Save();
+        }
+
+        public async Task<bool> Save()
+        {
+            return await _dbContext.SaveChangesAsync() > 0 ? true : false;
         }
 
     }

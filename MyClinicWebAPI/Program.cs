@@ -2,6 +2,8 @@ using Microsoft.EntityFrameworkCore;
 using MyClinicWebAPI.Interfaces;
 using MyClinicWebAPI.Repository;
 using MyClinicWebAPI.DataLayer;
+using System.Reflection;
+using Microsoft.OpenApi.Models;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -14,7 +16,34 @@ builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddScoped<IClient, ClientRepository>();
 builder.Services.AddScoped<IPrescription, PrescriptionRepository>();
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+
+builder.Services.AddSwaggerGen( c => 
+{ 
+    c.SwaggerDoc("v1", new OpenApiInfo { 
+        Title= "MyClinic Api",
+        Version = "v1",
+        Description = "An API to get data from MyClinic database",
+        //TermsOfService = "",
+        Contact = new OpenApiContact
+        {
+            Name = "Paulo Silva",
+            Email = "devpmms81@gmail.com"
+            //Url = new Uri("https://mysite.com") 
+        } /*,
+        License = new OpenApiLicense {
+            Name = "MyClinic API LICX",
+            Url = new Uri("https://mysite.com/license")
+        }
+        */
+    });
+
+    // Define XML file documentation
+    var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+    var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+    // Configuration to include comments in API methods
+    c.IncludeXmlComments(xmlPath); 
+});
+
 
 var connectionString = builder.Configuration.GetConnectionString("AppDBConnectionString");
 
@@ -33,7 +62,10 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseSwaggerUI(options =>
+    {
+        options.DefaultModelsExpandDepth(-1);
+    });
 }
 
 app.UseAuthorization();
