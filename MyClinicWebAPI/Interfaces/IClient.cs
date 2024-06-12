@@ -7,5 +7,6 @@ namespace MyClinicWebAPI.Interfaces
         Task<IEnumerable<ClientModel>> GetAllClient();
         Task<ClientModel> GetClientByIDAsync(int id);
         Task<bool> ClientExists(int id);
+        Task<ClientModel> GetClient(ClientModel _client);
     }
 }

@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MyClinicWebAPI.DataLayer;
 using MyClinicWebAPI.Dto;
@@ -29,9 +30,11 @@ namespace MyClinicWebAPI.Controllers
         /// </summary>
         /// <returns>The list of prescriptions</returns>
         [HttpGet]
+        [Authorize]
         //[Produces("application/json")]
         [ProducesResponseType(200, Type = typeof(IEnumerable<PrescriptionModel>))]
         [ProducesResponseType(400)]
+        [ProducesResponseType(401)]
         public async Task<IActionResult> GetAllPrescriptions()
         {
             IEnumerable<PrescriptionDto> _p = _mapper.Map<IEnumerable<PrescriptionDto>>(await _prescription.GetAllPrescription());
@@ -85,7 +88,7 @@ namespace MyClinicWebAPI.Controllers
         /// <param name="id"></param>
         /// <param name="_p"></param>
         /// <returns>Return status operation</returns>
-        [HttpPut("{id}")]
+        [HttpPut("{id:int}")]
         [ProducesResponseType(200)]
         [ProducesResponseType(404)]
         [ProducesResponseType(400)]
@@ -115,7 +118,7 @@ namespace MyClinicWebAPI.Controllers
         /// <param name="id"></param>
         /// <param name="_p"></param>
         /// <returns>Return status operation</returns>
-        [HttpDelete("{id}")]
+        [HttpDelete("{id:int}")]
         [ProducesResponseType(200)]
         [ProducesResponseType(404)]
         [ProducesResponseType(400)]

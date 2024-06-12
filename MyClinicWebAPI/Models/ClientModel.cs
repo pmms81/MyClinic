@@ -9,7 +9,7 @@ namespace MyClinicWebAPI.Models
         public string? Name { get; set; } = "";
         [DataType(DataType.EmailAddress)]
         public string Email { get; set; } = "";
-        [DataType(DataType.EmailAddress)]
+        [DataType(DataType.Password)]
         public string Password { get; set; } = "";
 
     }

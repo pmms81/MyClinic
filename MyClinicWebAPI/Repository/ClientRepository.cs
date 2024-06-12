@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 using MyClinicWebAPI.DataLayer;
 using MyClinicWebAPI.Interfaces;
@@ -28,6 +29,20 @@ namespace MyClinicWebAPI.Repository
         public async Task<bool> ClientExists(int id)
         {
             return await _dbContext.Client.AnyAsync(c => c.ID == id);
+        }
+
+        public async Task<ClientModel> GetClient(ClientModel _client)
+        {
+            PasswordHasher<object> pwd = new PasswordHasher<Object?>();
+            ClientModel ?c = await _dbContext.Client.FirstOrDefaultAsync(i => i.Email == _client.Email);
+            if (c != null)
+            {
+                PasswordVerificationResult ver = pwd.VerifyHashedPassword(null, c.Password, _client.Password);
+                if (ver == PasswordVerificationResult.Success)
+                    return c;
+            }
+
+            return null;
         }
     }
 }

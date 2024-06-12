@@ -2,17 +2,18 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using MyClinic.Interfaces;
+using MyClinic.Models;
 using System.Security.Claims;
 using System.Security.Cryptography.Xml;
 
-namespace MyClinic.Models
+namespace MyClinic.Controllers
 {
     public class AccountController : Controller
     {
         private readonly IClient _client;
         public AccountController(IClient client)
         {
-            this._client = client;
+            _client = client;
         }
 
         public IActionResult Login()
@@ -29,11 +30,11 @@ namespace MyClinic.Models
                 return View("Login");
             }
 
-           try
+            try
             {
                 ClientModel c = await _client.GetClient(client);
 
-                if ( c != null)
+                if (c != null)
                 {
                     // Creating the security context
                     /*var claims = new List<Claim>
@@ -42,25 +43,25 @@ namespace MyClinic.Models
                         new Claim("TypeUser","Admin")
                     };*/
 
-                    IEnumerable<RoleModel> cr =  await _client.GetClientRolesByIDAsync(c.ID);
+                    IEnumerable<RoleModel> cr = await _client.GetClientRolesByIDAsync(c.ID);
 
                     List<Claim> claims = new List<Claim>();
 
                     claims.Add(new Claim(ClaimTypes.Name, c.Name)); // Username (get from the database), hardcoded for now
-                    claims.Add(new Claim(ClaimTypes.Sid,Convert.ToString(c.ID)));
+                    claims.Add(new Claim(ClaimTypes.Sid, Convert.ToString(c.ID)));
 
                     foreach (RoleModel rm in cr)
                     {
-                        claims.Add(new Claim("TypeUser",rm.Role));
+                        claims.Add(new Claim("TypeUser", rm.Role));
                     }
 
                     var identity = new ClaimsIdentity(claims, "MyCookieAuth");
                     ClaimsPrincipal claimsPrincipal = new ClaimsPrincipal(identity);
 
-                    await HttpContext.SignInAsync("MyCookieAuth",claimsPrincipal);
+                    await HttpContext.SignInAsync("MyCookieAuth", claimsPrincipal);
 
                     return RedirectToAction("Index", "Client");
-                } 
+                }
                 else
                 {
                     ModelState.AddModelError("ValidationMessage", "Wrong E-mail or Password");
@@ -82,7 +83,7 @@ namespace MyClinic.Models
         public async Task<IActionResult> Logout()
         {
             await HttpContext.SignOutAsync("MyCookieAuth");
-            return RedirectToAction("Index","Client");
+            return RedirectToAction("Index", "Client");
         }
     }
 }
